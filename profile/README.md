@@ -4,122 +4,128 @@
 
 # Infrastructure for governed, long-running AI systems
 
-Covenant is an open control and evidence layer for AI systems that operate over
-extended periods. It turns human intent into scoped authority, durable state,
-controlled execution, and verifiable records—so agents can continue work
-without losing context or operating beyond their mandate.
+Covenant gives AI systems scoped authority, durable state, runtime control, and
+verifiable evidence for work that spans tools, sessions, and organizations.
+Teams can define what a system may do, restore its state after interruption,
+and trace consequential actions through durable records.
 
 [Website](https://opencovenant.org) ·
 [Documentation](https://docs.opencovenant.org) ·
-[Architecture](https://github.com/open-covenant/covenant#architecture)
+[Core architecture](https://github.com/open-covenant/covenant#architecture) ·
+[Live sandbox](https://sandbox.opencovenant.org)
 
-## The Covenant platform
+## Platform capabilities
 
-Long-running AI systems need more than access to tools. They need a durable way
-to determine what may happen, preserve what has happened, recover across
-interruptions, and prove why an action was allowed.
-
-| Layer              | Capability                                                                        |
-| ------------------ | --------------------------------------------------------------------------------- |
-| Authority          | Issue, constrain, inspect, and revoke scoped capabilities                         |
-| Continuity         | Preserve memory and execution state across sessions and restarts                  |
-| Control            | Supervise runtime activity and route policy decisions                             |
-| Accountability     | Produce append-only audit records, provenance, and settlement evidence            |
-| Temporal reasoning | Represent and verify relationships among events, plans, forecasts, and hypotheses |
+| Capability          | What it provides                                                                   |
+| ------------------- | ---------------------------------------------------------------------------------- |
+| Scoped authority    | Inspectable, revocable capabilities that define which actions a system may perform |
+| Durable continuity  | Memory and execution state that survive session, worker, and process boundaries    |
+| Runtime control     | Supervision, policy routing, and controlled access to tools and external services  |
+| Verifiable evidence | Append-only audit records, provenance, attestations, and settlement receipts       |
+| Temporal reasoning  | Queryable relationships among events, plans, forecasts, and hypotheses             |
 
 ## Projects
 
-| Project                                                                       | Purpose                                                                                                                 |
-| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| [Covenant](https://github.com/open-covenant/covenant)                         | Core control plane and daemon for capabilities, durable state, runtime control, audit, provenance, SDKs, and settlement |
-| [Covenant Timeline](https://github.com/open-covenant/covenant-timeline)       | Proof-carrying temporal reasoning for events, plans, forecasts, hypotheses, and intervals                               |
-| [Covenant Trust Layer](https://github.com/open-covenant/covenant-trust-layer) | Deterministic allow, review, and deny decisions with tamper-evident receipts                                            |
-| [Covenant Plugin](https://github.com/open-covenant/covenant-plugin)           | Remote MCP access to Covenant identity, reputation, and attestation services                                            |
-| [Covenant Skill](https://github.com/open-covenant/covenant-skill)             | Agent-facing workflows for verifiable execution and settlement                                                          |
+| Project                                                                       | Role                                                                                                           |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| [Covenant](https://github.com/open-covenant/covenant)                         | Control plane and daemon for capabilities, state, runtime supervision, audit, provenance, SDKs, and settlement |
+| [Covenant Timeline](https://github.com/open-covenant/covenant-timeline)       | Proof-carrying temporal reasoning for events, plans, forecasts, hypotheses, and intervals                      |
+| [Covenant Trust Layer](https://github.com/open-covenant/covenant-trust-layer) | Deterministic allow, review, and deny decisions with tamper-evident receipts                                   |
+| [Covenant Plugin](https://github.com/open-covenant/covenant-plugin)           | Remote MCP access to Covenant identity, reputation, and attestation services                                   |
+| [Covenant Skill](https://github.com/open-covenant/covenant-skill)             | Agent-facing workflows for verifiable execution and settlement                                                 |
 
 ## Temporal reasoning for AI systems
 
-Time is not the order in which records arrive. Plans can precede execution,
-observations can arrive late, forecasts can branch, and facts can remain valid
-for only part of a process.
+[Covenant Timeline](https://github.com/open-covenant/covenant-timeline) gives
+models and applications a portable representation of events, intervals, plans,
+forecasts, and corrections. It distinguishes when a fact was valid from when
+it was observed or recorded, so late evidence can update current reasoning
+without changing earlier answers.
 
-[Covenant Timeline](https://github.com/open-covenant/covenant-timeline) models
-those distinctions explicitly. Draft v0alpha3 defines metric and ordinal time
-axes; isolated actual, planned, forecast, and hypothetical contexts; and
-evidence-bound points, intervals, coordinates, constraints, and facts.
+Typed queries return bounds, temporal relations, or contradictions with proof
+receipts that another process can verify. The same temporal state can be shared
+across models, runtimes, languages, and workflows.
 
-Applications issue typed temporal queries and receive deterministic
-conclusions—bounds, relations, or contradictions—with proof receipts that can
-be checked independently of the reasoning call. The result is a portable
-temporal state designed to be shared across models, runtimes, languages, and
-workflows.
-
-> **Status:** Timeline is experimental. Draft v0alpha3 is available in source
-> under
-> [RFC 0009](https://github.com/open-covenant/covenant-timeline/blob/main/rfcs/0009-temporal-reasoning-substrate.md).
-> The current npm alpha provides checkpoint verification and does not expose
-> the v0alpha3 reasoning API. See
-> [Timeline release status](https://github.com/open-covenant/covenant-timeline#release-status)
-> for the exact support and stability boundary.
+Timeline v0alpha3 is available from source under
+[Draft RFC 0009](https://github.com/open-covenant/covenant-timeline/blob/main/rfcs/0009-temporal-reasoning-substrate.md).
+See
+[Timeline release status](https://github.com/open-covenant/covenant-timeline#release-status)
+for supported APIs and distribution channels.
 
 [Explore Timeline](https://github.com/open-covenant/covenant-timeline) ·
 [Read the vision](https://github.com/open-covenant/covenant-timeline/blob/main/docs/temporal-reasoning-vision.md) ·
 [Integrate a model](https://github.com/open-covenant/covenant-timeline/blob/main/docs/model-interface.md)
 
-## How the platform fits together
+## Architecture
 
 ```mermaid
 flowchart LR
-    intent["Human intent"] --> core["Covenant control plane"]
-    model["AI system"] <--> core
-    core --> authority["Capabilities and policy"]
-    core --> continuity["State and runtime"]
-    core <--> timeline["Temporal reasoning"]
-    core --> evidence["Audit, provenance and receipts"]
-    services["External services"] <--> core
+    intent["Human intent and operator policy"] --> core["Covenant control plane"]
+    app["AI application or runtime"] <--> core
+    core --> authority["Capabilities"]
+    core --> continuity["Durable state"]
+    core <--> timeline["Temporal state and proofs"]
+    core --> evidence["Audit, provenance, attestations and receipts"]
+    tools["Tools and external services"] <--> core
 ```
 
-Covenant governs authority and continuity. Timeline makes temporal state
-explicit and verifiable. Trust Layer produces deterministic policy receipts.
-The plugin and skill expose these capabilities to agent runtimes and operator
-workflows.
+Covenant manages authority, continuity, and controlled execution. Timeline
+provides queryable temporal state and conclusions with machine-checkable
+proofs. Trust Layer produces deterministic policy decisions and receipts. The
+plugin, skill, and SDK surfaces connect these capabilities to applications,
+agent runtimes, and operator workflows.
 
-## Ecosystem adapters
+## Where Covenant fits
 
-Optional adapters connect Covenant to external identity, inference, data,
-payment, settlement, and evidence systems while core contracts remain
-provider-neutral. Review the
-[implemented capabilities](https://github.com/open-covenant/covenant#capabilities)
-and [repository documentation](https://github.com/open-covenant/covenant/tree/main/docs)
-for each adapter's current support and deployment boundary.
+- **Software delivery:** constrain agent authority, retain state through
+  restarts, and preserve the evidence behind review and release decisions.
+- **Long-running operations:** coordinate work that spans workers, tools, and
+  approval boundaries with a durable audit trail.
+- **Research and analysis:** represent observations, validity periods,
+  competing hypotheses, and later corrections as inspectable temporal state.
+- **Governed workflows:** combine domain-owned policy and evidence with
+  explicit capabilities, provenance, and deterministic verification.
+- **AI platforms:** provide shared control and evidence services across models,
+  runtimes, and application teams.
 
-## Maturity
+Provider-neutral interfaces support optional adapters for identity, inference,
+data, payments, settlement, and evidence systems. The
+[capability index](https://github.com/open-covenant/covenant#capabilities) and
+[integration documentation](https://github.com/open-covenant/covenant/tree/main/docs)
+describe each implemented surface.
 
-Covenant is alpha infrastructure intended for evaluation, integration, and
-contribution. The local control plane, capability lifecycle, durable memory,
-audit and provenance surfaces, SDKs, and multiple settlement adapters are
-implemented and tested.
+## Evaluate Covenant
 
-Covenant is not yet positioned for hostile-code isolation or networked
-multi-peer production deployment. Timeline remains a Draft, source-only surface
-without independent operator or cross-implementation validation.
+1. Explore the [live sandbox](https://sandbox.opencovenant.org).
+2. Run the [Covenant quick start](https://github.com/open-covenant/covenant#quick-start)
+   against a bounded local workflow.
+3. Choose one bounded workflow and define the authority, state, and evidence it
+   must preserve.
+4. Integrate through the relevant SDK, plugin, skill, or model interface.
+5. Test revocation, restart recovery, and evidence replay under the deployment
+   policy.
 
-Each repository documents its exact guarantees, security model, and release
-status.
+Model and runtime teams can start with the
+[Timeline model interface](https://github.com/open-covenant/covenant-timeline/blob/main/docs/model-interface.md)
+and [executable temporal pilot](https://github.com/open-covenant/covenant-timeline/blob/main/docs/temporal-pilot.md).
+Independent implementers can use
+[RFC 0009](https://github.com/open-covenant/covenant-timeline/blob/main/rfcs/0009-temporal-reasoning-substrate.md)
+and the
+[conformance policy](https://github.com/open-covenant/covenant-timeline/blob/main/docs/policies/conformance.md).
 
-## Get started
+## Release maturity
 
-- **Operators and engineers:** evaluate the
-  [live sandbox](https://sandbox.opencovenant.org), then follow the
-  [Covenant quick start](https://github.com/open-covenant/covenant#quick-start).
-- **Model and runtime teams:** begin with the
-  [Timeline model interface](https://github.com/open-covenant/covenant-timeline/blob/main/docs/model-interface.md)
-  and
-  [temporal pilot](https://github.com/open-covenant/covenant-timeline/blob/main/docs/temporal-pilot.md).
-- **Independent implementers:** review
-  [RFC 0009](https://github.com/open-covenant/covenant-timeline/blob/main/rfcs/0009-temporal-reasoning-substrate.md)
-  and the
-  [conformance policy](https://github.com/open-covenant/covenant-timeline/blob/main/docs/policies/conformance.md).
-- **Contributors:** open a focused issue or proposal in the relevant repository.
-- **Security researchers:** use the affected repository's private vulnerability
-  reporting channel. Do not disclose vulnerabilities in public issues.
+Covenant is alpha infrastructure for evaluation, integration, and contribution.
+The local control plane, capability lifecycle, durable memory, audit and
+provenance surfaces, SDKs, and settlement adapters are implemented and tested.
+Timeline v0alpha3 is available from source for technical evaluation; its API
+remains Draft.
+
+Before production or high-stakes use, review the selected component's release
+status, security model, and deployment requirements.
+
+## Participate
+
+Open focused issues and proposals in the relevant repository. Security
+researchers should use that repository's private vulnerability-reporting
+channel.
