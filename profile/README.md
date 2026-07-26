@@ -46,11 +46,20 @@ Typed queries return bounds, temporal relations, or contradictions with proof
 receipts that another process can verify. The same temporal state can be shared
 across models, runtimes, languages, and workflows.
 
-Timeline v0alpha3 is available from source under
+Timeline v0alpha3 is available in
+[`@covenant-org/timeline@0.0.0-alpha.2`](https://www.npmjs.com/package/@covenant-org/timeline/v/0.0.0-alpha.2):
+
+```sh
+npm install --save-exact @covenant-org/timeline@0.0.0-alpha.2
+```
+
+The API is defined by
 [Draft RFC 0009](https://github.com/open-covenant/covenant-timeline/blob/main/rfcs/0009-temporal-reasoning-substrate.md).
-See
+Review the
+[alpha.2 release](https://github.com/open-covenant/covenant-timeline/releases/tag/timeline-v0.0.0-alpha.2)
+and
 [Timeline release status](https://github.com/open-covenant/covenant-timeline#release-status)
-for supported APIs and distribution channels.
+for supported APIs, distribution channels, and maturity.
 
 [Explore Timeline](https://github.com/open-covenant/covenant-timeline) ·
 [Read the vision](https://github.com/open-covenant/covenant-timeline/blob/main/docs/temporal-reasoning-vision.md) ·
@@ -118,8 +127,9 @@ and the
 Covenant is alpha infrastructure for evaluation, integration, and contribution.
 The local control plane, capability lifecycle, durable memory, audit and
 provenance surfaces, SDKs, and settlement adapters are implemented and tested.
-Timeline v0alpha3 is available from source for technical evaluation; its API
-remains Draft.
+Timeline v0alpha3 ships in
+[`@covenant-org/timeline@0.0.0-alpha.2`](https://www.npmjs.com/package/@covenant-org/timeline/v/0.0.0-alpha.2)
+for technical evaluation; its API remains Draft.
 
 Before production or high-stakes use, review the selected component's release
 status, security model, and deployment requirements.
