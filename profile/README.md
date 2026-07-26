@@ -13,7 +13,7 @@ control, append-only audit, commit-scoped provenance, and settlement evidence.
 | Project                                                                       | Purpose                                                                                                    |
 | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | [covenant](https://github.com/open-covenant/covenant)                         | Agent-native control plane, daemon, capabilities, memory, runtime, audit, provenance, SDKs, and settlement |
-| [covenant-timeline](https://github.com/open-covenant/covenant-timeline)       | Portable checkpoint contracts, deterministic replay, evidence profiles, and run verification               |
+| [covenant-timeline](https://github.com/open-covenant/covenant-timeline)       | Experimental temporal reasoning substrate and released checkpoint verifier                                 |
 | [covenant-trust-layer](https://github.com/open-covenant/covenant-trust-layer) | Deterministic allow, review, and deny decisions with tamper-evident receipts                               |
 | [covenant-plugin](https://github.com/open-covenant/covenant-plugin)           | Remote MCP access to Covenant identity, reputation, and attestation checks                                 |
 | [covenant-skill](https://github.com/open-covenant/covenant-skill)             | Agent skill for Covenant's verifiable execution and settlement surfaces                                    |
@@ -21,17 +21,25 @@ control, append-only audit, commit-scoped provenance, and settlement evidence.
 ## Covenant Timeline
 
 [Covenant Timeline](https://github.com/open-covenant/covenant-timeline) is a
-published alpha checkpoint-contract format and verifier for long-running agent
-and software work. It deterministically replays ordered evidence, checkpoint
-decisions, effect requests, and receipts. The released v0alpha1 package records
-an external evaluator's policy label; the source-only v0alpha2 schema binds
-profile and policy identity in the contract.
+proof-carrying temporal reasoning substrate for AI systems. Its experimental,
+source-only Draft v0alpha3 contract gives models and applications portable
+temporal state, typed queries, deterministic conclusions, and
+independently checkable proof receipts. Event sequence orders records and
+knowledge cuts; explicit metric or ordinal axes model time across isolated
+actual, planned, forecast, and hypothetical contexts.
 
-The repository now includes a collector-signed GitHub software-delivery
-profile, a public five-day run archive, a Temporal adapter tested across a
-worker restart, and a Python reducer matching the TypeScript conformance corpus.
-Covenant remains the first reference adopter. Independent external operation is
-still the adoption gate.
+The released `@covenant-org/timeline@0.0.0-alpha.1` package remains the narrower
+checkpoint verifier. The v0alpha1 and v0alpha2 checkpoint contracts are
+compatibility formats, not the architecture that v0alpha3 extends. The
+experimental v0alpha3 source is neither a stable nor normative release, and an
+external reasoning substrate does not by itself make time native to model
+weights.
+
+The checkpoint compatibility surface includes a collector-signed GitHub
+software-delivery profile, a public five-day run archive, a Temporal.io adapter
+tested across a worker restart, and a Python reducer matching the TypeScript
+conformance corpus. Covenant remains the first reference adopter. Independent
+external operation is still the adoption gate.
 
 Install the released package with:
 
@@ -40,7 +48,8 @@ npm install @covenant-org/timeline@0.0.0-alpha.1
 ```
 
 Timeline is not a distributed workflow runtime, a universal scoring system, or
-a production authorization service.
+a production authorization service. The published alpha is not a general
+temporal reasoner.
 
 ```mermaid
 flowchart LR
@@ -50,7 +59,7 @@ flowchart LR
     core --> runtime["Capabilities, memory and runtime"]
     core --> evidence["Audit, provenance and receipts"]
     integrations["Opt-in integrations"] -. tools and evidence .-> core
-    timeline["Timeline checkpoint verifier"] -. contracts and receipts .-> core
+    timeline["Timeline temporal state and verifier"] -. contracts, proofs and receipts .-> core
 ```
 
 ## Documented integrations
@@ -85,7 +94,9 @@ active work.
 Covenant Timeline has a published v0alpha1 TypeScript package and CLI, canonical
 byte identity, a landed Covenant adapter, source-only v0alpha2 policy binding,
 authenticated GitHub evidence, durable reference storage, a restart-tested
-Temporal adapter, and a second-language reducer. It has not yet demonstrated
+Temporal.io adapter, and a second-language reducer. The repository also contains
+the experimental, source-only temporal-first v0alpha3 contract and reasoning
+kernel; it is not yet released or normative. Timeline has not yet demonstrated
 independent external operation, production deployment evidence, stable SDK
 compatibility, or independently maintained implementation governance.
 
@@ -96,6 +107,7 @@ for each project.
 
 - Start with the [Covenant architecture](https://github.com/open-covenant/covenant#architecture).
 - Try the [Covenant Timeline alpha](https://github.com/open-covenant/covenant-timeline#install-the-released-alpha).
+- Read the [temporal reasoning vision](https://github.com/open-covenant/covenant-timeline/blob/main/docs/temporal-reasoning-vision.md).
 - Review the [Covenant Timeline program](https://github.com/open-covenant/covenant-timeline/blob/main/PROGRAM.md).
 - Open focused issues and proposals in the relevant repository.
 - Report vulnerabilities through the affected repository's private
