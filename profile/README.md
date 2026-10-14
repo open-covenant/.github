@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/covenant-header.png" alt="Covenant — human intent to agent protocol" width="100%" />
+  <img src="./assets/covenant-banner.png" alt="Covenant: an operating system that builds itself" width="100%" />
 </p>
 
 # Infrastructure for governed, long-running AI systems
